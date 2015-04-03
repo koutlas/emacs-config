@@ -4,13 +4,13 @@
 ;; -- Global Settings --
 ;; ---------------------
 
-; Grouped modes
-(add-to-list 'load-path "~/.emacs.d/utils")
-(add-to-list 'load-path "~/.emacs.d/yaml-mode")
-(add-to-list 'load-path "~/.emacs.d/php-mode")
+;; Initialise packages
+(package-initialize)
 
-(load "~/.emacs.d/web-mode")
-(load "~/.emacs.d/drupal-mode.el")
+;; Grouped modes
+(add-to-list 'load-path "~/.emacs.d/utils")
+(add-to-list 'load-path "~/.emacs.d/modes")
+(add-to-list 'load-path "~/.emacs.d/elpa")
 
 (require 'cl)
 (require 'ido)
@@ -23,11 +23,12 @@
 (require 'whitespace)
 (require 'dired-x)
 (require 'compile)
-(require 'yaml-mode)
 (require 'php-mode)
 (require 'drupal-mode)
 (require 'web-mode)
 (require 'markdown-mode)
+(require 'yaml-mode)
+(require 'adaptive-wrap)
 
 (ido-mode t)
 (menu-bar-mode -1)
@@ -42,12 +43,14 @@
 (setq vc-follow-symlinks t)
 (setq make-backup-files nil)
 (global-linum-mode 1)
+(global-visual-line-mode 1)
+
 
 ;; Indent with spaces @ 2
 (define-key global-map (kbd "RET") 'newline-and-indent)
-(setq-default indent-tabs-mode nil)
-(setq-default standard-indent 2)
-(setq-default c-basic-offset 2)
+;(setq-default indent-tabs-mode nil)
+;(setq-default standard-indent 2)
+;(setq-default c-basic-offset 2)
 (setq-default tab-width 2)
 
 
@@ -84,11 +87,10 @@
 (global-set-key "\M-o" 'other-window)
 (global-set-key "\M-i" 'back-window)
 (global-set-key "\C-z" 'zap-to-char)
-(global-set-key "\C-h" 'backward-delete-char)
+;(global-set-key "\C-h" 'backward-delete-char)
 (global-set-key "\M-d" 'delete-word)
 (global-set-key "\M-h" 'backward-delete-word)
 (global-set-key "\M-u" 'zap-to-char)
-
 
 ;; --------------
 ;; -- WEB Mode --
@@ -96,6 +98,7 @@
 (add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.blade\\.php\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.css?\\'" . web-mode))
 
 (defun my-web-mode-hook ()
   "Hooks for Web mode."
@@ -104,7 +107,8 @@
   (setq web-mode-code-indent-offset 2)
 )
 
-(add-hook 'web-mode-hook  'my-web-mode-hook)
+(add-hook 'web-mode-hook 'my-web-mode-hook)
+(add-hook 'web-mode-hook 'adaptive-wrap-prefix-mode)
 
 ;; -------------------------
 ;; -- PHP Mode and Drupal --
@@ -129,9 +133,13 @@
 (add-hook 'markdown-mode-hook
   (lambda()
     (set-fill-column 80)
-    (auto-fill-mode 1)))
+    (auto-fill-mode 1)
+  )
+)
 
-; Set pandoc as default html converter
+(add-to-list 'markdown-mode-hook 'adaptive-wrap-prefix-mode)
+(setq adaptive-wrap-extra-indent 2)
+
+; setq pandoc as default html converter
 (setq markdown-command "pandoc --smart -f markdown -t html")
 (setq markdown-css-path "/home/mr/personal/docs/writeups/md-styles.css")
-
