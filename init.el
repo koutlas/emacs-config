@@ -12,6 +12,10 @@
 (add-to-list 'load-path "~/.emacs.d/modes")
 (add-to-list 'load-path "~/.emacs.d/elpa")
 
+;; Load solarized theme
+(add-to-list 'custom-theme-load-path "~/.emacs.d/solarized-theme")
+(load-theme 'solarized t)
+
 (require 'cl)
 (require 'ido)
 (require 'ffap)
@@ -48,9 +52,6 @@
 
 ;; Indent with spaces @ 2
 (define-key global-map (kbd "RET") 'newline-and-indent)
-;(setq-default indent-tabs-mode nil)
-;(setq-default standard-indent 2)
-;(setq-default c-basic-offset 2)
 (setq-default tab-width 2)
 
 
@@ -63,11 +64,10 @@
  '(column-marker-1 ((t (:background "red"))))
  '(diff-added ((t (:foreground "cyan"))))
  '(flymake-errline ((((class color) (background light)) (:background "Red"))))
- '(font-lock-comment-face ((((class color) (min-colors 8) (background light)) (:foreground "red"))))
  '(fundamental-mode-default ((t (:inherit default))))
  '(highlight ((((class color) (min-colors 8)) (:background "white" :foreground "magenta"))))
  '(isearch ((((class color) (min-colors 8)) (:background "yellow" :foreground "black"))))
- '(linum ((t (:foreground "black" :weight bold))))
+ '(linum ((t (:background "light" :weight bold))))
  '(region ((((class color) (min-colors 8)) (:background "white" :foreground "magenta"))))
  '(secondary-selection ((((class color) (min-colors 8)) (:background "gray" :foreground "cyan"))))
  '(show-paren-match ((((class color) (background light)) (:background "black"))))
