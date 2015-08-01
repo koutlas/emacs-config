@@ -17,7 +17,9 @@ git clone https://github.com/tassoskoutlas/emacs-config.git .emacs.d/
 ```
 
 To test it works try:
-``` emacs -nw ~/.emacs.d/init.el ``
+```
+emacs -nw ~/.emacs.d/init.el
+```
 and make sure that everything works as expected.
 
 Enjoy!
